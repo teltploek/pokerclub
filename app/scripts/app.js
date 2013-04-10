@@ -1,5 +1,9 @@
 require.config({
-    baseUrl: "/"
+    baseUrl: '/',
+
+    paths: {
+        'config' : '../config'
+    },
 });
 
 define(['components/aura/lib/aura'], function(Aura) {

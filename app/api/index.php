@@ -17,7 +17,7 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
 ));
 
 $app->get('/seasons', function () use ($app){
-    $sql = "SELECT name FROM pk_seasons";
+    $sql = "SELECT name AS id, title FROM pk_seasons";
 
     $entries = $app['db']->fetchAll($sql);
 
@@ -25,7 +25,19 @@ $app->get('/seasons', function () use ($app){
 });
 
 $app->get('/rounds/{season}', function ($season) use ($app){
-    $sql = "SELECT name FROM pk_tournaments WHERE FK_seasons_ID = ".$season;
+
+    if ($season != 'all'){
+        $sql = "
+            SELECT  t.ID AS id,
+                    t.name AS title 
+
+            FROM pk_tournaments AS t
+            INNER JOIN pk_seasons AS s
+            ON t.FK_seasons_ID = s.ID 
+            WHERE s.name = ".$season;
+    }else{
+        $sql = "SELECT ID FROM pk_tournaments WHERE 0 = 1";
+    }
 
     $entries = $app['db']->fetchAll($sql);
 

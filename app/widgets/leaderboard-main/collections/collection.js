@@ -1,9 +1,8 @@
-define(['underscore', 'handlebars', '../models/row']
-, function(_, Handlebars, RowModel)
+define(['underscore', 'handlebars', 'config', '../models/row']
+, function(_, Handlebars, Configuration, RowModel)
 {
-	// TODO: require api module for service url
-	var baseUrl = 'http://localhost/api/',
-		urlTpl = Handlebars.compile('leaderboard/{{sortEntity}}/{{sortOrder}}/{{season}}/{{round}}');
+	
+	var urlTpl = Handlebars.compile( Configuration.serviceTemplates.leaderboard );
 
 	var Collection = Backbone.Collection.extend({
 		model 	: RowModel,	
@@ -13,10 +12,10 @@ define(['underscore', 'handlebars', '../models/row']
 		season		: 'latest',
 		round		: 'all',
 
-		url	: baseUrl + urlTpl({ 	sortEntity 	: 'points',
-									sortOrder 	: 'desc',
-									season 		: 'latest',
-									round 		: 'all' }),
+		url	: Configuration.baseApiUrl + urlTpl({ 	sortEntity 	: 'points',
+													sortOrder 	: 'desc',
+													season 		: 'latest',
+													round 		: 'all' }),
 
 		changeSortOrder: function(){
 			this.sortOrder = this.sortOrder == 'desc' ? 'asc' : 'desc';
@@ -64,11 +63,9 @@ define(['underscore', 'handlebars', '../models/row']
 			return urlTpl(this);
 		},
 
-		applyChanges: function(){
-			console.log('do applyChanges');
-			
+		applyChanges: function(){			
 			this.fetch({
-				url : baseUrl + urlTpl(this)
+				url : Configuration.baseApiUrl + urlTpl(this)
 			});
 		}
 	});

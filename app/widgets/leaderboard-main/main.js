@@ -1,14 +1,12 @@
 define(['underscore',
-        'jquery',
-        './views/row',
-        'hbs!./templates/board',
         './collections/collection',
+        './views/row',
+        'hbs!./templates/board',       
         'hbs!./templates/loading'],
 function( _,
-          $,
+          Collection,
           ItemView,
-          boardTmpl,
-          boardCollection,
+          boardTmpl,         
           loadingTmpl) {
 
   return {    
@@ -16,7 +14,7 @@ function( _,
 
     template: boardTmpl,
 
-    collection: new boardCollection(),
+    collection: new Collection(),
 
     loadingTemplate: loadingTmpl,
 
@@ -36,18 +34,16 @@ function( _,
       _.bindAll(this, 'render');
 
       var view = this;
-      
-      var collection = new boardCollection();
 
       this.renderLoading();
-
-      this.attachCollectionListeners();
-
+      
       this.sandbox.on('route.leaderboard.**', this.updateBoard, this);
 
       // listen for changes in season and round widgets
       this.sandbox.on('season.change', this.setSeasonFilter, this);
       this.sandbox.on('round.change', this.setRoundFilter, this);
+
+      this.attachCollectionListeners();
     },
 
     updateBoard: function(){     
@@ -140,13 +136,6 @@ function( _,
         $tbody.append(view.el);
 
       }, this);
-
-      // ChartView.prototype.render.apply(this, arguments);
-
-      // for (var i = 0, len = this.collection.length; i < len; i++) {
-      // var item = this.collection.at(i);
-      // this.$('div.number:eq('+i+')').html('<a href="#!/film/movie/'+item.get('urlMovieId')+'">'+(i+1)+'</a>');
-      // }
     },
 
     renderLoading: function() {
