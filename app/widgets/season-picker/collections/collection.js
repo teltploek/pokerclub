@@ -5,7 +5,18 @@ define(['underscore', 'handlebars', 'config', '../models/item']
 
 	var Collection = Backbone.Collection.extend({
 		model 	: ItemModel,
-		url	: Configuration.baseApiUrl + urlTpl()
+
+		currentSeason : 0,
+
+		url	: Configuration.baseApiUrl + urlTpl(),
+
+		setCurrentSeason: function(season){
+			this.currentSeason = season || this.currentSeason;
+		},
+
+		getCurrentSeason: function(){
+			return this.currentSeason;
+		}
 	});
 
 	return Collection;

@@ -6,6 +6,7 @@ define(['underscore', 'handlebars', 'config', '../models/item']
 	var Collection = Backbone.Collection.extend({
 		model 	: ItemModel,
 
+		currentRound: 'all',
 		season : '',
 
 		url	: Configuration.baseApiUrl + urlTpl({ season : 'all' }),
@@ -16,8 +17,16 @@ define(['underscore', 'handlebars', 'config', '../models/item']
 			this.applyChanges();
 		},
 
+		setCurrentRound: function(round){
+			this.currentRound = round || this.currentRound;
+		},
+
 		getSeason: function(){
 			return this.season;
+		},
+
+		getCurrentRound: function(){
+			return this.currentRound;
 		},
 
 		applyChanges: function(){			

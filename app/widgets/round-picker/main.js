@@ -28,10 +28,19 @@ function( _,
     initialize: function() {
       _.bindAll(this, 'render');
 
+      this.sandbox.on('route.leaderboard.**', this.roundController, this);
+
       this.sandbox.on('round.change', this.setRound, this);
       this.sandbox.on('season.change', this.seasonChange, this);
 
       this.attachCollectionListeners();
+    },
+
+    roundController: function(){     
+      var slice = Array.prototype.slice;
+      var args = slice.call(arguments, 1);
+
+      this.sandbox.emit('round.change', args[3]);
     },
 
     seasonChange: function(season){
@@ -51,7 +60,9 @@ function( _,
     },
 
     collectionReady: function(){
-      this.sandbox.emit('round.change', 'all');
+      this.setRoundTitle();
+
+      this.sandbox.emit('round.change', this.collection.getCurrentRound() );
 
       // if there's only one round, let's just hide the control - we only need it if there's something to choose between
       if (this.collection.length == 1){
@@ -60,6 +71,14 @@ function( _,
     },
 
     setRound: function(round){
+      this.collection.setCurrentRound(round);
+
+      this.setRoundTitle();
+    },
+
+    setRoundTitle: function(){
+      var round = this.collection.getCurrentRound();
+
       var roundTitle = this.$('a[data-round='+round+']').text();
 
       this.$('#roundPickerCaption').text( roundTitle );

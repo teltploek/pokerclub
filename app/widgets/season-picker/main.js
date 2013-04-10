@@ -19,7 +19,7 @@ function( _,
       'click [data-season]': function(e){
         e.preventDefault();
         
-        var data = this.sandbox.dom.data(e.target);
+        var data = this.sandbox.dom.data(e.target);       
 
         this.sandbox.emit('season.change', data.season);
       }
@@ -29,6 +29,8 @@ function( _,
       var me = this;
 
       _.bindAll(this, 'render');
+
+      this.sandbox.on('route.leaderboard.**', this.seasonController, this);
 
       this.sandbox.on('season.change', this.setSeason, this);
 
@@ -41,6 +43,14 @@ function( _,
       });
     },
 
+    seasonController: function(){     
+      var slice = Array.prototype.slice;
+      var args = slice.call(arguments, 1);
+
+      this.sandbox.emit('season.change', args[2]);
+    },
+
+
     attachCollectionListeners: function() {
       this.collection.on('reset', this.render);
       this.collection.on('add', this.render);
@@ -48,9 +58,11 @@ function( _,
     },
 
     collectionReady: function(){
-      var defaultSeason = this.collection.at(0);
+      var season = this.collection.getCurrentSeason() || this.collection.at(0).get('id');
+      
+      this.setSeasonTitle();
 
-      this.sandbox.emit('season.change', defaultSeason.get('id') );
+      this.sandbox.emit('season.change', season);
 
       // if there's only one season, let's just hide the controls - we only need it if there's something to choose between
       if (this.collection.length == 1){
@@ -59,6 +71,14 @@ function( _,
     },
 
     setSeason: function(season){
+      this.collection.setCurrentSeason(season);     
+
+      this.setSeasonTitle();
+    },
+
+    setSeasonTitle: function(){
+      var season = this.collection.getCurrentSeason();
+
       var seasonTitle = this.$('a[data-season='+season+']').text();
 
       this.$('#seasonPickerCaption').text( seasonTitle );

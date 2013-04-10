@@ -63,7 +63,7 @@ function( _,
             me.collection.setSeason(entry);
             break;
           case 3: // round
-            me.collection.setRound(entry);
+            me.collection.setRound(entry);            
             break;
         }
 
@@ -81,13 +81,22 @@ function( _,
     setSeasonFilter: function(season){
       var route = this.collection.returnUrl({ season : season });
 
-      this.sandbox.router.navigate(route, { trigger : true });
+      // if route is the same as before, the Backbone.Router won't trigger navigate (even if trigger is set to true!) - this would cause our view not to re-render
+      if (route !== Backbone.history.fragment){
+        this.sandbox.router.navigate(route, { trigger : true });
+      }else{
+        this.updateBoard();
+      }
     },
 
     setRoundFilter: function(round){
       var route = this.collection.returnUrl({ round : round });
 
-      this.sandbox.router.navigate(route, { trigger : true });
+      if (route !== Backbone.history.fragment){
+        this.sandbox.router.navigate(route, { trigger : true });
+      }else{
+        this.updateBoard();
+      }
     },
 
     attachCollectionListeners: function() {
