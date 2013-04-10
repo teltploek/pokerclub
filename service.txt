@@ -1,0 +1,161 @@
+SELECT
+
+-- ############################
+-- ### columns start		###
+-- ############################
+
+m.name,
+
+-- ############################
+-- ### appearances			###
+-- ############################
+
+IFNULL(
+	(
+		SELECT COUNT(mt1.FK_members_ID)
+		FROM pk_members_tournaments AS mt1
+		WHERE mt1.FK_members_ID = m.ID
+		
+		-- for specific tournament
+		-- AND mt1.FK_tournaments_ID = mt.FK_tournaments_ID
+
+		GROUP BY mt1.FK_members_ID
+	)
+, 0) AS appearances,
+
+-- ############################
+-- ### points				###
+-- ############################
+
+(
+	SELECT 
+		ROUND(
+			SUM(
+
+				-- 10 * [sqrt(<number of participants>)/sqrt(<player rank in tournament>)] * [1+log(<buyin>+0,25)]
+
+				10 * 
+				( 
+					SQRT(
+						(
+							SELECT COUNT(FK_members_ID) 
+							FROM pk_members_tournaments AS mtsubsub 
+							WHERE mtsubsub.FK_tournaments_ID = mtsub.FK_tournaments_ID 
+						) 
+					)
+					/
+					SQRT( mtsub.placeFinished )
+				) 
+
+				*
+				( 1 + LOG( 100 + 0.25) ) -- todo: select buyin dynamically - it's hardcoded to 100 as of right now
+
+			)
+	)
+
+	FROM pk_members_tournaments AS mtsub
+	INNER JOIN pk_members AS msub
+	ON msub.ID = mtsub.FK_members_ID
+
+	WHERE mtsub.FK_members_ID = m.ID
+
+	-- for specific tournament
+	-- AND mtsub.FK_tournaments_ID = mt.FK_tournaments_ID
+
+	GROUP BY mtsub.FK_members_ID
+
+) AS points,
+
+-- ############################
+-- ### pointsPerGame		###
+-- ############################
+
+(
+	SELECT(
+		ROUND(
+			(points / appearances)
+		, 2)
+	)
+) AS pointsPerGame,
+
+-- ############################
+-- ### hits					###
+-- ############################
+
+SUM( mt.knockouts ) AS hits,
+
+-- ############################
+-- ### hitsPerGame			###
+-- ############################
+
+(
+	SELECT(
+		ROUND(
+			(SUM( mt.knockouts ) / appearances)
+		, 2)
+	)
+) AS hitsPerGame,
+
+-- ############################
+-- ### moneyWon				###
+-- ############################
+
+SUM( mt.prize ) AS moneyWon,
+
+-- ############################
+-- ### moneyWonPerGame		###
+-- ############################
+
+(
+	SELECT(
+		ROUND(
+			(SUM( mt.prize ) / appearances)
+			, 2
+		)
+	)
+) AS moneyWonPerGame,
+
+-- ############################
+-- ### inTheMoney 			###
+-- ############################
+
+IFNULL(
+	(
+		SELECT COUNT(mt2.FK_members_ID)
+		FROM pk_members_tournaments AS mt2
+		WHERE mt2.FK_members_ID = m.ID	
+		AND mt2.placeFinished < 5 
+
+		-- for specific tournament
+		-- AND mt2.FK_tournaments_ID = mt.FK_tournaments_ID
+
+		GROUP BY mt2.FK_members_ID
+	)
+, 0) AS inTheMoney,
+
+-- ############################
+-- ### inTheMoneyPercentage ###
+-- ############################
+(
+	SELECT( 
+		ROUND(
+			(inTheMoney / appearances) * 100
+		)
+	)
+)
+AS inTheMoneyPercentage
+
+
+-- ############################
+-- ### /columns	end			###
+-- ############################
+
+FROM pk_members_tournaments AS mt
+INNER JOIN pk_members AS m ON m.ID = mt.FK_members_ID
+
+-- for specific tournament
+-- WHERE mt.FK_tournaments_ID = 1
+
+GROUP BY m.ID
+
+ORDER BY points DESC 

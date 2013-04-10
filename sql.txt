@@ -1,0 +1,174 @@
+RANK
+--
+SELECT m.name FROM pk_members AS m
+
+INNER JOIN pk_members_tournaments AS mt
+ON m.ID = mt.FK_members_ID
+
+WHERE mt.FK_tournaments_ID = 1
+
+ORDER BY placeFinished ASC
+--
+
+ELIMINATIONS
+--
+SELECT m.name, SUM(mt.knockouts) AS totalEliminations FROM pk_members_tournaments AS mt
+
+INNER JOIN pk_members AS m ON m.ID = mt.FK_members_ID
+
+WHERE mt.FK_tournaments_ID = 1
+
+GROUP BY m.ID
+
+ORDER BY totalEliminations DESC
+--
+
+MONEY & ELIMINATIONS
+--
+SELECT m.name, SUM( mt.knockouts ) AS totalEliminations, SUM( mt.prize ) AS prizeMoney
+FROM pk_members_tournaments AS mt
+INNER JOIN pk_members AS m ON m.ID = mt.FK_members_ID
+
+GROUP BY m.ID
+ORDER BY prizeMoney DESC 
+LIMIT 0 , 30
+
+
+MONEY, ELIMINATIONS, APPEARANCES
+--
+SELECT
+
+m.name,
+SUM( mt.knockouts ) AS totalEliminations,
+SUM( mt.prize ) AS prizeMoney,
+
+(
+SELECT COUNT(mt1.FK_members_ID)
+FROM pk_members_tournaments AS mt1
+WHERE mt1.FK_members_ID = m.ID
+GROUP BY mt1.FK_members_ID
+) AS appearances 
+
+FROM pk_members_tournaments AS mt
+INNER JOIN pk_members AS m ON m.ID = mt.FK_members_ID
+GROUP BY m.ID
+
+ORDER BY prizeMoney DESC 
+LIMIT 0 , 30
+
+
+
+
+#################
+POINTS ALONE
+#################
+
+SELECT 
+
+m.name,
+
+SUM(
+
+	10 * ( SQRT( (SELECT COUNT(FK_members_ID) FROM pk_members_tournaments AS mtsubsub WHERE mtsubsub.FK_tournaments_ID = mtsub.FK_tournaments_ID ) )/ SQRT( mtsub.placeFinished ) ) * ( 1 + LOG( 100 + 0.25) )
+
+) AS points
+
+FROM pk_members_tournaments AS mtsub
+
+INNER JOIN pk_members AS m
+ON m.ID = mtsub.FK_members_ID
+
+GROUP BY mtsub.FK_members_ID
+
+ORDER BY points DESC
+
+#################
+
+
+
+
+
+
+
+
+
+##################################################################
+##################################################################
+##																##
+##							ALL TOGETHER!!!						##
+##																##
+##################################################################
+##################################################################
+
+SELECT
+
+m.name,
+
+IFNULL(
+	(
+		SELECT COUNT(mt1.FK_members_ID)
+		FROM pk_members_tournaments AS mt1
+		WHERE mt1.FK_members_ID = m.ID
+		
+		-- for specific tournament
+		-- AND mt1.FK_tournaments_ID = mt.FK_tournaments_ID
+
+		GROUP BY mt1.FK_members_ID
+	)
+, 0) AS appearances,
+
+SUM( mt.knockouts ) AS knockouts,
+SUM( mt.prize ) AS prizeMoney,
+
+
+
+IFNULL(
+	(
+		SELECT COUNT(mt2.FK_members_ID)
+		FROM pk_members_tournaments AS mt2
+		WHERE mt2.FK_members_ID = m.ID	
+		AND mt2.placeFinished < 5 
+
+		-- for specific tournament
+		-- AND mt2.FK_tournaments_ID = mt.FK_tournaments_ID
+
+		GROUP BY mt2.FK_members_ID
+	)
+, 0) AS itm,
+
+(
+SELECT 
+
+SUM(
+
+	10 * ( SQRT( (SELECT COUNT(FK_members_ID) FROM pk_members_tournaments AS mtsubsub WHERE mtsubsub.FK_tournaments_ID = mtsub.FK_tournaments_ID ) )/ SQRT( mtsub.placeFinished ) ) * ( 1 + LOG( 100 + 0.25) )
+
+)
+
+FROM pk_members_tournaments AS mtsub
+
+INNER JOIN pk_members AS msub
+ON msub.ID = mtsub.FK_members_ID
+
+WHERE mtsub.FK_members_ID = m.ID
+
+-- for specific tournament
+-- AND mtsub.FK_tournaments_ID = mt.FK_tournaments_ID
+
+GROUP BY mtsub.FK_members_ID
+
+) AS points,
+
+(SELECT(points / appearances)) AS pointPerGame 
+
+
+
+FROM pk_members_tournaments AS mt
+INNER JOIN pk_members AS m ON m.ID = mt.FK_members_ID
+
+-- for specific tournament
+-- WHERE mt.FK_tournaments_ID = 1
+
+GROUP BY m.ID
+
+ORDER BY prizeMoney DESC 
