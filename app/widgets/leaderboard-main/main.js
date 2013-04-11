@@ -33,8 +33,6 @@ function( _,
     initialize: function() {
       _.bindAll(this, 'render');
 
-      var view = this;
-
       this.renderLoading();
       
       this.sandbox.on('route.leaderboard.**', this.updateBoard, this);

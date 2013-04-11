@@ -11,8 +11,9 @@ Using Yeoman, Backbone, Aura JS and PHP/MySQL/Silex for the backend.
 
 # Next up - in random order
 
- * Porthole widget - to emphasize the ones to beat above leaderboard
- * Title widget - to show chosen filter
+ * Porthole widget - to emphasize the ones to beat
+ * ~~Title widget - to show chosen filter~~
  * ~~Hide 'per round' columns on round selection~~
  * ~~Sorting should also change url~~
+ * Layout and styling
  * Google Analytics

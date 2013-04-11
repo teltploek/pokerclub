@@ -1,0 +1,27 @@
+<h3 class="pull-left">
+{{#if roundChosen}}
+	Sæson {{season}}
+{{else}}
+	
+	{{#if seasonChosen}}
+		Alltime leaderboard
+	{{else}}
+		Leaderboard
+	{{/if}}
+
+{{/if}}
+</h3>
+
+{{#if roundChosen}}
+<h6 class="pull-left">
+	{{round}}. spillerunde
+</h6>
+{{/if}}
+
+{{#unless roundChosen}}
+{{#unless seasonChosen}}
+<h6 class="pull-left">
+	Sæson {{season}}
+</h6>
+{{/unless}}
+{{/unless}}
