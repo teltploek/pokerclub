@@ -38,7 +38,7 @@ define(['underscore', 'handlebars', 'config', '../models/row']
 
 			this.setSortEntity(sortEntity);
 
-			this.applyChanges();
+			return urlTpl(this);
 		},
 
 		setSeason: function(season){
@@ -51,6 +51,18 @@ define(['underscore', 'handlebars', 'config', '../models/row']
 			this.round = round || this.round;
 
 			return urlTpl(this);
+		},
+
+		getRound: function(){
+			return this.round;
+		},
+
+		getSortEntity: function(){
+			return this.sortEntity;
+		},
+
+		getSortOrder: function(){
+			return this.sortOrder;
 		},
 
 		returnUrl: function(changeObj){

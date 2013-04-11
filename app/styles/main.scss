@@ -1,6 +1,7 @@
+/* Imports -> boostrap
+------------------------- */
 @import 'sass-bootstrap/lib/bootstrap';
 
-.hero-unit {
-    margin: 50px auto 0 auto;
-    width: 300px;
-}
+/* Imports -> widgets
+------------------------- */
+@import 'widgets/leaderboard';

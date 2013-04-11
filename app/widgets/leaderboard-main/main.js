@@ -75,7 +75,13 @@ function( _,
     setSort: function(event){
       var sortEntity = $(event.target).data('sort-entity');
 
-      this.collection.setSort(sortEntity);
+      var route = this.collection.setSort(sortEntity);
+
+      if (route !== Backbone.history.fragment){
+        this.sandbox.router.navigate(route, { trigger : true });
+      }else{
+        this.updateBoard();
+      }
     },
 
     setSeasonFilter: function(season){
@@ -129,7 +135,9 @@ function( _,
       this.$el.html( boardTmpl() );
 
       var $tbody = this.$('tbody'),
-        rows = [];
+          caretDirection = this.collection.getSortOrder() == 'desc' ? 'down' : 'up',
+          sortEntity = this.collection.getSortEntity(),
+          rows = [];
       
       this.collection.each(function(model) {
         var ItemView = this._getItemView(model);
@@ -145,6 +153,16 @@ function( _,
         $tbody.append(view.el);
 
       }, this);
+
+      // add caret to current sort column
+      this.$('th[data-sort-entity="'+sortEntity+'"]').append('<div class="sort '+caretDirection+'"></div>');
+
+      // if a particular game is selected it makes no sense to show per game columns
+      if (this.collection.getRound() === 'all'){
+        this.$('.per-game').show();
+      }else{
+        this.$('.per-game').hide();
+      }
     },
 
     renderLoading: function() {
