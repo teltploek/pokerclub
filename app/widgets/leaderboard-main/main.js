@@ -49,6 +49,8 @@ function( _,
       var slice = Array.prototype.slice;
       var args = slice.call(arguments, 1);
 
+      var changes = 0;
+
       _.each(args, function(entry, idx){
         switch(idx){
           case 0: // sort entity
@@ -61,7 +63,7 @@ function( _,
             me.collection.setSeason(entry);
             break;
           case 3: // round
-            me.collection.setRound(entry);            
+            me.collection.setRound(entry);
             break;
         }
 
@@ -74,6 +76,10 @@ function( _,
       var sortEntity = $(event.target).data('sort-entity');
 
       var route = this.collection.setSort(sortEntity);
+
+      var sortOrder = this.collection.getSortOrder();
+
+      this.sandbox.emit('leaderboard-sort.change', sortEntity, sortOrder);
 
       if (route !== Backbone.history.fragment){
         this.sandbox.router.navigate(route, { trigger : true });
@@ -161,6 +167,11 @@ function( _,
       }else{
         this.$('.per-game').hide();
       }
+
+      this.$('th i').popover({
+        trigger : 'hover',
+        html : true
+      });
     },
 
     renderLoading: function() {

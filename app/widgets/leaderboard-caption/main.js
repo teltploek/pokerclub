@@ -12,17 +12,18 @@ return {
       season        : '',
       round         : '',
     	seasonChosen  : true,
-      roundChosen   : false
+      roundChosen   : false,
+      sortEntity    : '',
+      sortOrder     : ''
     },
 
     initialize: function() {
       _.bindAll(this, 'render');     
 
       // listen for changes in season and round widgets
-      this.sandbox.on('season.change', this.setSeason, this);
-      this.sandbox.on('round.change', this.setRound, this);
-
-      this.render();
+      this.sandbox.on('season-title.change', this.setSeason, this);
+      this.sandbox.on('round-title.change', this.setRound, this);
+      this.sandbox.on('leaderboard-sort.change', this.setSort, this);
     },
 
     setSeason: function(season){
@@ -39,8 +40,17 @@ return {
       this.render();
     },
 
+    setSort: function(sortEntity, sortOrder){
+      this.templateData.sortEntity = sortEntity;
+      this.templateData.sortOrder = sortOrder == 'asc' ? 'stigende' : 'faldende'; // TODO: consider internalization module for these strings
+
+      this.render();
+    },
+
     render: function(){
     	this.$el.html( tpl( this.templateData ) );
+
+      this.$('.caption-wrapper').fadeIn('slow');
     }
 }
 

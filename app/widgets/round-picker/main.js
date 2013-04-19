@@ -82,6 +82,8 @@ function( _,
       var roundTitle = this.$('a[data-round='+round+']').text();
 
       this.$('#roundPickerCaption').text( roundTitle );
+
+      this.sandbox.emit('round-title.change', roundTitle);
     },
 
     itemView: function() { return ItemView; },

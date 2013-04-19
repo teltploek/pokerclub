@@ -2,15 +2,88 @@
     <thead>
         <tr>
             <th data-sort-entity="name">Navn</th>
-            <th data-sort-entity="appearances">Antal spil</th>
-            <th data-sort-entity="points">Point</th>
+            <th data-sort-entity="appearances">
+                Antal spil
+                <i  data-original-title="Antal spil" 
+                    data-content="
+                        Antallet af spillerunder deltageren har deltaget i.
+                    "
+                    class="icon-question-sign" 
+                    data-toggle="popover" 
+                    data-placement="bottom" 
+                    title=""></i>
+            </th>
+            <th data-sort-entity="points">
+                Point
+
+                <i  data-original-title="Point" 
+                    data-content="
+                        Det antal point deltageren har vundet.<br><br>
+                        Udregnet efter følgende formel:<br><br>
+                        Points = 10 * [sqrt(n)/sqrt(k)] * [1+log(b+0,25)]
+                        <br><br>
+                        Hvor:
+                        <br><br>
+                        n er antallet af deltagere<br>
+                        k er slutplaceringen (k=1 for førstepladsen og så videre)<br>
+                        b er buy-in i US Dollars (minus adgangsgebyret).<br>
+                    "                 
+                    class="icon-question-sign" 
+                    data-toggle="popover" 
+                    data-placement="bottom" 
+                    title=""></i>
+            </th>
             <th class="per-game" data-sort-entity="pointsPerGame">Point / spil</th>
-            <th data-sort-entity="hits">KO</th>            
+            <th data-sort-entity="hits">
+                KO
+
+                <i  data-original-title="Antal spil" 
+                    data-content="
+                        Antallet af knockouts. Med andre ord, antallet af deltagere denne deltager har elimineret.
+                    "
+                    class="icon-question-sign" 
+                    data-toggle="popover" 
+                    data-placement="bottom" 
+                    title=""></i>
+            </th>
             <th class="per-game" data-sort-entity="hitsPerGame">KO / spil</th>
-            <th data-sort-entity="moneyWon">Kr.</th>
+            <th data-sort-entity="moneyWon">
+                Kr.
+
+                <i  data-original-title="Antal spil" 
+                    data-content="
+                        Det beløb i kr. som deltageren har vundet til sin rejsekonto.
+                    "
+                    class="icon-question-sign" 
+                    data-toggle="popover" 
+                    data-placement="bottom" 
+                    title=""></i>
+            </th>
             <th class="per-game" data-sort-entity="moneyWonPerGame">Kr. / spil</th>
-            <th data-sort-entity="inTheMoney">ITM</th>
-            <th class="per-game" data-sort-entity="inTheMoneyPercentage">ITM%</th>
+            <th data-sort-entity="inTheMoney">
+                ITM
+
+                <i  data-original-title="Antal spil" 
+                    data-content="
+                        ITM står for &quot;In the money&quot;. Altså viser denne kolonne, hvor mange gange spilleren har opnået en placering der har givet præmieudbetaling.
+                    "
+                    class="icon-question-sign" 
+                    data-toggle="popover" 
+                    data-placement="bottom" 
+                    title=""></i>
+            </th>
+            <th class="per-game" data-sort-entity="inTheMoneyPercentage">
+                ITM%
+
+                <i  data-original-title="Antal spil" 
+                    data-content="
+                        ITM står for &quot;In the money&quot;. Altså viser denne kolonne, hvor ofte spilleren opnår en placering der giver præmieudbetaling.
+                    "
+                    class="icon-question-sign" 
+                    data-toggle="popover" 
+                    data-placement="bottom" 
+                    title=""></i>
+            </th>
         </tr>
     </thead>
     <tbody>

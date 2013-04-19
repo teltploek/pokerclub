@@ -1,27 +1,33 @@
-<h3 class="pull-left">
-{{#if roundChosen}}
-	Sæson {{season}}
-{{else}}
-	
-	{{#if seasonChosen}}
-		Alltime leaderboard
+<div class="caption-wrapper" style="display:none;">
+	<h3>
+	{{#if roundChosen}}
+		{{season}}
 	{{else}}
-		Leaderboard
+		
+		{{#if seasonChosen}}
+			Alltime leaderboard
+		{{else}}
+			Leaderboard
+		{{/if}}
+
+	{{/if}}
+	</h3>
+
+	{{#if roundChosen}}
+	<h6>
+		{{round}}
+
+		{{#if sortEntity}}
+			- sorteret efter {{sortEntity}} {{sortOrder}}
+		{{/if}}
+	</h6>
 	{{/if}}
 
-{{/if}}
-</h3>
-
-{{#if roundChosen}}
-<h6 class="pull-left">
-	{{round}}. spillerunde
-</h6>
-{{/if}}
-
-{{#unless roundChosen}}
-{{#unless seasonChosen}}
-<h6 class="pull-left">
-	Sæson {{season}}
-</h6>
-{{/unless}}
-{{/unless}}
+	{{#unless roundChosen}}
+	{{#unless seasonChosen}}
+	<h6 class="pull-left">
+		{{season}}
+	</h6>
+	{{/unless}}
+	{{/unless}}
+</div>

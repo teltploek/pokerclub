@@ -82,6 +82,8 @@ function( _,
       var seasonTitle = this.$('a[data-season='+season+']').text();
 
       this.$('#seasonPickerCaption').text( seasonTitle );
+
+      this.sandbox.emit('season-title.change', seasonTitle);
     },
 
     itemView: function() { return ItemView; },

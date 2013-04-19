@@ -59,7 +59,8 @@ $app->get('/leaderboard/{sortEntity}/{sortOrder}/{season}/{round}', function ($s
             (
                 SELECT COUNT(mt1.FK_members_ID)
                 FROM pk_members_tournaments AS mt1
-                WHERE mt1.FK_members_ID = m.ID
+                WHERE mt1.FK_members_ID = m.ID 
+                AND mt1.FK_membersTournamentsStatus_ID = 1
     ";
 
                 if ($round != 'all'){
@@ -177,6 +178,7 @@ $app->get('/leaderboard/{sortEntity}/{sortOrder}/{season}/{round}', function ($s
                 FROM pk_members_tournaments AS mt2
                 WHERE mt2.FK_members_ID = m.ID  
                 AND mt2.placeFinished < 5 
+                AND mt2.placeFinished > 0
         ";
 
                 if ($round != 'all'){
