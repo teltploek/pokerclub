@@ -10,7 +10,8 @@
     "backbone.localStorage" : "latest",
     "backbone": "0.9.10",
     "underscore": "latest",
-    "require-handlebars-plugin": "latest"
+    "require-handlebars-plugin": "latest",
+    "highcharts": "latest"
   },
   "devDependencies": {}
-}gri
+}

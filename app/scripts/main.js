@@ -2,12 +2,17 @@ require.config({
     baseUrl: "/",
     paths: {
         jquery: 'components/jquery/jquery',
+        highcharts: 'components/highcharts/highcharts',
         bootstrap: 'scripts/vendor/bootstrap'
     },
     shim: {
         bootstrap: {
             deps: ['jquery'],
             exports: 'jquery'
+        },
+        "highcharts": {
+            "exports": "Highcharts",
+            "deps": [ "jquery"] 
         }
     }
 });

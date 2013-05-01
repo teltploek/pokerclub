@@ -44,6 +44,58 @@ $app->get('/rounds/{season}', function ($season) use ($app){
     return $app->json($entries);  
 });
 
+$app->get('/chart/money/{season}', function($season) use ($app) {
+
+    // clubMoney - TODO: fix!
+    $sql = "
+        SELECT 
+        name,
+        SUM(mt.prize) AS totalprizes,
+        (
+            SELECT 
+            ROUND(
+            (
+                (
+                    (9530 - 
+                    (
+                        SELECT
+                        SUM(pkclubmoney.prize)
+                        FROM
+                        pk_members_tournaments AS pkclubmoney WHERE 0 = 0 ";
+
+                // if ($season == 'all'){
+                // }else{
+                //     $sql .= "
+                //         AND pkclubmoney.FK_tournaments_ID = t.ID 
+                //     ";
+                // }
+
+                // if ($round != 'all'){
+                //     $sql .= "
+                //         AND pkclubmoney.FK_tournaments_ID = ".$round."
+                //     ";
+                // }
+
+    $sql .= "
+                ))
+                / 100 * 90 )
+            ) 
+        / (SELECT COUNT(DISTINCT FK_members_ID) FROM pk_members_tournaments), 2)) AS clubMoney
+
+        FROM pk_members AS m
+
+        LEFT JOIN pk_members_tournaments AS mt ON 
+        mt.FK_members_ID = m.ID
+
+        GROUP BY m.ID 
+        ORDER BY m.name
+    ";
+    
+    $entries = $app['db']->fetchAll($sql);
+
+    return $app->json($entries);
+});
+
 $app->get('/leaderboard/{sortEntity}/{sortOrder}/{season}/{round}', function ($sortEntity, $sortOrder, $season, $round) use ($app) {
 
     $sql = "

@@ -5,7 +5,8 @@ define(function(){
 		serviceTemplates : {
 			leaderboard: 'leaderboard/{{sortEntity}}/{{sortOrder}}/{{season}}/{{round}}',
 			seasons: 'seasons',
-			rounds: 'rounds/{{season}}'
+			rounds: 'rounds/{{season}}',
+			chart: 'chart/money/{{season}}'
 		}
 	};
 

@@ -10,7 +10,7 @@ define([]
 	    hits					: 0,
 	    hitsPerGame				: 0,
 	    moneyWon				: 0,
-	    moneyWonPerGame 		: 0,
+	    moneyWonPerGame 		: 0,    
 	    inTheMoney 				: 0,
 	    inTheMoneyPercentage 	: 0
 	  }
