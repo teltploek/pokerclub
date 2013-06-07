@@ -4,10 +4,6 @@ Just a repository for my private poker club statistics website.
 
 Using Yeoman, Backbone, Aura JS and PHP/MySQL/Silex for the backend.
 
-# Fixmes
-
- * Sometimes when loading the root the leaderboard isn't rendering - probably some sort of race condition.
-
 # Next up - in random order
 
  * Porthole widget - to emphasize the ones to beat
@@ -21,5 +17,5 @@ Using Yeoman, Backbone, Aura JS and PHP/MySQL/Silex for the backend.
  * When sorting first sort per sortentity then it's sortentity per game (if any)
  * Add sort entity and order to subtitle <- needs pretty translation for entity
  * New columns:
- 	* First time out
+ 	* First one out
  	* Tournaments won
