@@ -35,10 +35,9 @@ define({
             app.sandbox.router = router;
 
             // app.sandbox.on.log('route.**'); // dump all routes to console.log
-            app.sandbox.on('route.**', function(){
-              console.log('route...');
-              console.log(arguments);
-            });
+            // app.sandbox.on('route.**', function(){
+            //   console.log(arguments);
+            // });
   
         }, 200);
       }

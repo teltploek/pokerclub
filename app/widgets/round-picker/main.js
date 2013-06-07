@@ -1,3 +1,5 @@
+// TODO: find out why /#leaderboard resolves to a call to the service with missing round param
+
 define(['underscore',
         './collections/collection',
         './views/item',
@@ -28,10 +30,8 @@ function( _,
     initialize: function() {
       _.bindAll(this, 'render');
 
-      this.sandbox.on('route.leaderboard.**', this.roundController, this);
-
-      this.sandbox.on('round.change', this.setRound, this);
-      this.sandbox.on('season.change', this.seasonChange, this);
+      this.sandbox.on('leaderboard-round.change', this.setRound, this);
+      this.sandbox.on('leaderboard-season.change', this.seasonChange, this);
 
       this.attachCollectionListeners();
     },

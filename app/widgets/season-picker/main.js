@@ -30,9 +30,7 @@ function( _,
 
       _.bindAll(this, 'render');
 
-      this.sandbox.on('route.leaderboard.**', this.seasonController, this);
-
-      this.sandbox.on('season.change', this.setSeason, this);
+      this.sandbox.on('leaderboard-season.change', this.setSeason, this);
 
       this.attachCollectionListeners();
 

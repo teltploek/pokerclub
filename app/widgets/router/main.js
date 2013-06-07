@@ -1,31 +1,53 @@
-// TODO: move to routes definition, so we can't call all widgets as routes
-// TODO: we also need a default route
-// TODO: we want the page to stay on the page, if the leaderboard is the same
-
-define(['jquery'], function($){
+define(['config', 'jquery'], function(Configuration, $){
 	return {    
     	type: 'Backbone',
-    	
-    	bodyElm: null,
+		
+    	pageElm: null,
 
     	initialize: function() {
-    		bodyElm = $(this.el).closest('body');
-
 			this.sandbox.on('route.**', this.handleRouting, this);
 		},
 
 		handleRouting: function(route, args){
-			var sandbox = this.sandbox;
-		
-			require(['text!widgets/' +route+ '/templates/' +route+ '.html'], function(widgetTemplate) {
-          		bodyElm.html(widgetTemplate);
+			var pageElm = $(this.el),
+				sandbox = this.sandbox,
+				page;
 
-          		_.each($(bodyElm).find('[data-aura-widget]'), function(elm){
-          			var widget = $(elm).attr('data-aura-widget');         			
-          		});
+			// stop existing widgets, so we can load new ones
+			sandbox.stop('#viewport');
 
-          		sandbox.start('body');
+			page = this.resolvePage(route);
+
+			// load new page of widgets
+			require(['text!' + page.get('tplRef') ], function(widgetTemplate) {
+          		pageElm.html(widgetTemplate);
+
+          		sandbox.start('#viewport');
           	});
+		},
+
+		// find out which page the route translates to
+		resolvePage: function(route){
+			var pages = Configuration.pages,
+				page;
+
+			if (route === ''){
+				page = pages.find(function (page) {
+					return page.get('isDefaultPage') === true && !page.get('isGeneric');
+				});
+			}else{
+				page = pages.find(function (page) {
+					return page.get('route') === route && !page.get('isGeneric');
+				});
+
+				if (!page){
+					page = pages.find(function (page) {
+						return page.get('route') === '404' && page.get('isGeneric');
+					});
+				}
+			}
+
+			return page;
 		}
     }
 });
