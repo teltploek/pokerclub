@@ -4,7 +4,11 @@ Just a repository for my private poker club statistics website.
 
 Using Yeoman, Backbone, Aura JS and PHP/MySQL/Silex for the backend.
 
-# Next up - in random order
+## Thoughts...
+
+Thinking about moving from bootstrap to topcoat... would also facilitate switch to Stylus *rubbing chin*
+
+## Next up - in random order
 
  * Porthole widget - to emphasize the ones to beat
  * ~~Title widget - to show chosen filter~~
