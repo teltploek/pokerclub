@@ -15,6 +15,7 @@ function( _,
       // listen for changes in season and round widgets
       this.sandbox.on('season.change', this.setSeasonFilter, this);
       this.sandbox.on('round.change', this.setRoundFilter, this);
+      this.sandbox.on('sort.change', this.setSort, this);
 
       this.attachCollectionListeners();
 
@@ -49,14 +50,9 @@ function( _,
       this.collection.applyChanges();
     },
 
-    setSort: function(event){
-      var sortEntity = $(event.target).data('sort-entity');
-
+    setSort: function(sortEntity, sortOrder){
+      console.log(arguments);
       var route = this.collection.setSort(sortEntity);
-
-      var sortOrder = this.collection.getSortOrder();
-
-      this.sandbox.emit('leaderboard-sort.change', sortEntity, sortOrder);
 
       if (route !== Backbone.history.fragment){
         this.sandbox.router.navigate(route, { trigger : true });

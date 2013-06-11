@@ -96,7 +96,8 @@ function( _,
             backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColorSolid) || 'white',
             borderColor: '#ddd',
             borderWidth: 1,
-            shadow: false
+            shadow: false,
+            useHTML: true
           },
           tooltip: {
             formatter: function() {

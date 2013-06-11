@@ -1,10 +1,18 @@
-#leaderboard{
+.leaderboard-table{
 	th{
 		cursor:pointer;
 	}
 
-	.per-game{
+	th[data-sort-entity="name"],
+	td.name{
+		text-align: left;
+	}
+
+	.per-game{	
 		color:#aaa;
+	}
+	th.per-game{
+		text-align: center;
 	}
 
 	.sort{

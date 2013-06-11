@@ -45,15 +45,9 @@ function( _,
     setSort: function(event){
       var sortEntity = $(event.target).data('sort-entity');
 
-      var route = this.collection.setSort(sortEntity);
-
       var sortOrder = this.collection.getSortOrder();
 
-      this.sandbox.emit('leaderboard-sort.change', sortEntity, sortOrder);
-
-      if (route !== Backbone.history.fragment){
-        this.sandbox.router.navigate(route, { trigger : true });
-      }
+      this.sandbox.emit('sort.change', sortEntity, sortOrder);
     },
 
     attachCollectionListeners: function() {
