@@ -19,7 +19,8 @@ define(['config', 'jquery'], function(Configuration, $){
 			page = this.resolvePage(route);
 
 			// load new page of widgets
-			require(['text!' + page.get('tplRef') ], function(widgetTemplate) {
+			require(['text!' + page.get('templatePath') ], function(widgetTemplate) {
+				// inject html and start widgets
           		pageElm.html(widgetTemplate);
 
           		sandbox.start('#viewport');

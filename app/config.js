@@ -2,7 +2,7 @@ define(function(){
 	var PageModel = new Backbone.Model({
 		defaults: {
 			name			: '',
-			tplRef			: '',
+			templatePath	: '',
 			isDefaultPage	: false,
 			isGeneric		: false
 		}
@@ -15,7 +15,7 @@ define(function(){
     // add site specific pages
     PageCollection.add([
 			{   route	  		:	'leaderboard',
-                tplRef 	 		: 	'pages/leaderboard.html',
+                templatePath 	: 	'pages/leaderboard.html',
                 isDefaultPage  	: 	true
             }
     ]);
@@ -23,13 +23,12 @@ define(function(){
     // add generic pages
     PageCollection.add([
 			{   route	  		:	'404',
-                tplRef 	 		: 	'pages/generic/404.html',
+                templatePath 	: 	'pages/generic/404.html',
                 isGeneric		: 	true
             }
     ]);
 
-    console.log(PageCollection.models);
-
+    // stitch the configuration parameters together
 	var config = {
 		baseApiUrl : 'http://localhost/api/',
 

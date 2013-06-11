@@ -1,0 +1,9 @@
+.picker-wrapper{
+	height:90px;
+
+	.picker{
+		position:relative;
+		top:50%;
+		margin-top:-15px; // half of the outerHeight of the picker
+	}
+}

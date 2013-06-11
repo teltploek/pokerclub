@@ -21,8 +21,6 @@ function( _,
     },
 
     render: function() {
-      console.log(this);
-
       this.$el.html( chartTmpl() );
 
       this.initChart();
@@ -41,14 +39,31 @@ function( _,
 
       this.$('.chart').highcharts({
         chart: {
-          type: 'column'
+          type: 'column',
+          borderRadius: 0,
+          style: {
+            fontFamily: '"Open Sans", Georgia, "Times New Roman", Times, serif', // default font
+            fontSize: '14px'
+          }
         },
         colors: [
-          '#f28f43', 
-          '#8bbc21'
+          '#EFCC58', 
+          '#DC4A2D'
         ],
         title: {
-          text: 'Rejsepenge sæsonen 2013'
+          text: 'Rejsepenge sæsonen 2013',
+          align: 'left',
+          margin: 40,
+          useHTML: true,
+          style: {
+            fontFamily: '"Montserrat", Helvetica, Arial, sans-serif', // default font
+            fontSize: '33px',
+            textTransform: 'uppercase',
+            fontWeight: 'bold',
+            webkitTextStrokeWidth: '0.5px',
+            color: '#EFCC58',
+            top: '0'
+          }
         },
         xAxis: {
           categories: names
@@ -56,13 +71,13 @@ function( _,
         yAxis: {
           min: 0,
           title: {
-            text: 'Rejsepenge'
+            text: ''
           },
           stackLabels: {
             enabled: true,
             style: {
               fontWeight: 'bold',
-                color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+                color: (Highcharts.theme && Highcharts.theme.textColor) || '#6B6763'
               }
             },
             labels: {
@@ -73,14 +88,15 @@ function( _,
           },
           legend: {
             align: 'right',
-            x: -100,
+            x: 0,
             verticalAlign: 'top',
-            y: 20,
+            y: 0,
+            borderRadius: 0,
             floating: true,
             backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColorSolid) || 'white',
-            borderColor: '#CCC',
+            borderColor: '#ddd',
             borderWidth: 1,
-            shadow: true
+            shadow: false
           },
           tooltip: {
             formatter: function() {
