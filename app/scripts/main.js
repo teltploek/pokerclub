@@ -18,7 +18,7 @@ require.config({
 });
 
 define(['components/aura/lib/aura', 'bootstrap'], function(Aura) {
-  Aura()
+  Aura({ debug : true })
     .use('extensions/aura-backbone')
     .use('extensions/aura-router')
     .use('extensions/aura-localstorage')
