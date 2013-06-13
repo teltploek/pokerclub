@@ -51,7 +51,6 @@ function( _,
     },
 
     setSort: function(sortEntity, sortOrder){
-      console.log(arguments);
       var route = this.collection.setSort(sortEntity);
 
       if (route !== Backbone.history.fragment){

@@ -28,12 +28,10 @@ function( _,
       'click th' : 'setSort'
     },
 
-    initialize: function() {      
+    initialize: function() {
       this.sandbox.on('leaderboard-data.change', this.setCollection, this);
 
       this.renderLoading();
-
-      this.attachCollectionListeners();
     },
 
     setCollection: function(collection){
@@ -48,12 +46,6 @@ function( _,
       var sortOrder = this.collection.getSortOrder();
 
       this.sandbox.emit('sort.change', sortEntity, sortOrder);
-    },
-
-    attachCollectionListeners: function() {
-      this.collection.on('reset', this.render);
-      this.collection.on('add', this.render);
-      this.collection.on('remove', this.render);
     },
 
     _getTemplate: function(model, element) {

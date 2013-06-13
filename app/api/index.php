@@ -56,7 +56,7 @@ $app->get('/chart/money/{season}', function($season) use ($app) {
             ROUND(
             (
                 (
-                    (12130 - 
+                    (12630 - 
                     (
                         SELECT
                         SUM(pkclubmoney.prize)
