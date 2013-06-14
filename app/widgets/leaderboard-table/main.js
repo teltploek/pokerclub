@@ -30,7 +30,7 @@ function( _,
 
     initialize: function() {
       this.prepareToDie();
-      
+
       this.sandbox.on('leaderboard-data.change', this.setCollection, this);
 
       this.renderLoading();
@@ -87,11 +87,11 @@ function( _,
 
         var view = (new View());
 
-        //row.push(view.el);
-
-        $tbody.append(view.el);
+        rows.push(view.el);
 
       }, this);
+
+      $tbody.append(rows);
 
       // add caret to current sort column
       this.$('th[data-sort-entity="'+sortEntity+'"]').append('<div class="sort '+caretDirection+'"></div>');
@@ -103,6 +103,7 @@ function( _,
         this.$('.per-game').hide();
       }
 
+      // FIXME : remove popover when tearing view down! It will get rid of 52 detached dom trees
       this.$('th i').popover({
         trigger : 'hover',
         html : true
