@@ -27,8 +27,6 @@ function( _,
     itemView: function() { return ItemView; },
 
     initialize: function() {  
-      this.prepareToDie();
-
       this.renderLoading();
 
       this.attachCollectionListeners();

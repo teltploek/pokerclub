@@ -26,12 +26,20 @@ define(function() {
 
         Backbone.View.prototype.teardown = function() {
           console.log('Teardown: ', this);
-          
+
+          this.unbind();
+
           this.stopListening();
 
           this.off();
           this.sandbox.off();
           this.collection.off();
+
+          delete this;   
+          delete this.el;
+
+          this.$el.empty();
+          this.$el.remove();
 
           delete this.$el;
 

@@ -1,8 +1,6 @@
 define(['config', 'jquery'], function(Configuration, $){
 	return {    
     	type: 'Backbone',
-		
-    	pageElm: null,
 
     	currentRoute: '',
 
@@ -20,7 +18,7 @@ define(['config', 'jquery'], function(Configuration, $){
 		},
 
 		handleRouting: function(route, args){
-			var pageElm = $(this.el),
+			var pageElm = $('#viewport'),
 				sandbox = this.sandbox,
 				page;
 
@@ -33,6 +31,8 @@ define(['config', 'jquery'], function(Configuration, $){
 			// load new page of widgets
 			require(['text!' + page.get('templatePath') ], function(widgetTemplate) {
 				// inject html and start widgets
+				pageElm.empty();
+
           		pageElm.html(widgetTemplate);
 
           		sandbox.start('#viewport');

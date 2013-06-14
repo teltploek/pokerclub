@@ -11,7 +11,7 @@ function( _,
 
     initialize: function() {     
       _.bindAll(this, 'emitChanges');
-      
+
       this.prepareToDie();
 
       this.sandbox.on('route.leaderboard.**', this.updateBoard, this);
@@ -91,8 +91,6 @@ function( _,
 
     attachCollectionListeners: function() {
       this.collection.on('reset',   this.emitChanges);
-      this.collection.on('add',     this.emitChanges);
-      this.collection.on('remove',  this.emitChanges);
     },
 
     emitChanges: function() {
