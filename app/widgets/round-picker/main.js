@@ -28,6 +28,8 @@ function( _,
     },
 
     initialize: function() {
+      this.prepareToDie();
+      
       _.bindAll(this, 'render');
 
       this.sandbox.on('leaderboard-round.change', this.setRound, this);

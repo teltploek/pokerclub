@@ -4,8 +4,19 @@ define(['config', 'jquery'], function(Configuration, $){
 		
     	pageElm: null,
 
+    	currentRoute: '',
+
     	initialize: function() {
-			this.sandbox.on('route.**', this.handleRouting, this);
+			this.sandbox.on('route.**', this.mediator, this);
+		},
+
+		mediator: function(route, args){
+			// we don't want to change page if the first part of the hash still points to the current page
+			if (route !== this.getPageFragment(route, args)){
+				this.currentRoute = route;
+
+				this.handleRouting(route, args);
+			}
 		},
 
 		handleRouting: function(route, args){
@@ -14,7 +25,8 @@ define(['config', 'jquery'], function(Configuration, $){
 				page;
 
 			// stop existing widgets, so we can load new ones
-			sandbox.stop('#viewport');
+			// sandbox.stop();
+			sandbox.emit('teardown');
 
 			page = this.resolvePage(route);
 
@@ -26,6 +38,21 @@ define(['config', 'jquery'], function(Configuration, $){
           		sandbox.start('#viewport');
           	});
 		},
+
+		getPageFragment: function(){
+			return (this.currentRoute || '').split('/')[0];
+		},
+
+		// widgetList: function(){
+		// 	var selector = '[data-aura-widget]',
+		// 		widgets = [];
+
+		// 	$(selector, '#viewport').each(function(){
+		// 		widgets.push( $(this).attr('data-aura-widget') );
+		// 	});
+
+		// 	return widgets;
+		// },
 
 		// find out which page the route translates to
 		resolvePage: function(route){
@@ -51,4 +78,4 @@ define(['config', 'jquery'], function(Configuration, $){
 			return page;
 		}
     }
-});
+});	

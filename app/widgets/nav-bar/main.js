@@ -26,7 +26,9 @@ function( _,
 
     itemView: function() { return ItemView; },
 
-    initialize: function() {     
+    initialize: function() {  
+      this.prepareToDie();
+
       this.renderLoading();
 
       this.attachCollectionListeners();
@@ -61,8 +63,6 @@ function( _,
     },
 
     render: function() {
-      console.log(123);
-
       this.$el.html( this.template() );
 
       var $menuItemBody = this.$('ul.nav'),

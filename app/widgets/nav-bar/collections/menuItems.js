@@ -21,6 +21,10 @@ define(['underscore', 'handlebars', 'config', '../models/item']
 		{
 			route 	: 'baz',
 			caption : 'Baz'
+		},
+		{
+			route 	: 'leaderboard',
+			caption : 'leaderboard'
 		}
 	]);
 

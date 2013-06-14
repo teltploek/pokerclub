@@ -18,6 +18,8 @@ return {
     },
 
     initialize: function() {
+      this.prepareToDie();
+      
       _.bindAll(this, 'render');     
 
       // listen for changes in season and round widgets

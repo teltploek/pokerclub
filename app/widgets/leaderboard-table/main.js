@@ -29,6 +29,8 @@ function( _,
     },
 
     initialize: function() {
+      this.prepareToDie();
+      
       this.sandbox.on('leaderboard-data.change', this.setCollection, this);
 
       this.renderLoading();

@@ -26,6 +26,8 @@ function( _,
     },
 
     initialize: function() {
+      this.prepareToDie();
+      
       var me = this;
 
       _.bindAll(this, 'render');

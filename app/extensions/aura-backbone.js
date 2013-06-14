@@ -18,7 +18,27 @@ define(function() {
         app.sandbox.mvc = Backbone;
         app.sandbox.widgets = app.core.Widgets;
 
-        app.core.registerWidgetType('Backbone', Backbone.View.prototype);
+        Backbone.View.prototype.prepareToDie = function(){
+          _.bindAll(this, 'teardown');
+
+          this.sandbox.on('teardown', this.teardown);
+        };
+
+        Backbone.View.prototype.teardown = function() {
+          console.log('Teardown: ', this);
+          
+          this.stopListening();
+
+          this.off();
+          this.sandbox.off();
+          this.collection.off();
+
+          delete this.$el;
+
+          this.close();         
+        };
+
+        app.core.registerWidgetType('Backbone', Backbone.View.prototype);        
       }
     }
   }

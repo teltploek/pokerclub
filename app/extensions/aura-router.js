@@ -6,10 +6,8 @@ define({
           _.delay(function() {            
 
             var Router = Backbone.Router.extend({
-              initialize: function() {
-                Backbone.history.start();
-
-                app.sandbox.emit('initialized', 'Initialized Router');
+              initialize: function() { 
+                Backbone.history.start();              
               },
 
               routes: {
@@ -35,9 +33,11 @@ define({
             app.sandbox.router = router;
 
             // app.sandbox.on.log('route.**'); // dump all routes to console.log
-            // app.sandbox.on('route.**', function(){
-            //   console.log(arguments);
-            // });
+            
+            app.sandbox.on('route.**', function(route){
+              console.log(arguments);
+              console.log('change to route : ' + route);
+            });
   
         }, 200);
       }

@@ -14,7 +14,13 @@ function( _,
 
     template: chartTmpl,
 
+    chart: null,
+
     initialize: function() {
+      _.bindAll(this, 'render');
+
+      this.prepareToDie();
+
       this.attachCollectionListeners();
 
       this.collection.fetch();
@@ -27,9 +33,9 @@ function( _,
     },
 
     attachCollectionListeners: function() {
-      this.collection.on('reset', this.render, this);
-      this.collection.on('add', this.render, this);
-      this.collection.on('remove', this.render, this);
+      this.collection.on('reset', this.render);
+      this.collection.on('add', this.render);
+      this.collection.on('remove', this.render);
     },
 
     initChart: function(){
@@ -37,8 +43,9 @@ function( _,
           clubMoney = this.collection.getClubMoney(),
           totalprizes = this.collection.getTotalPrizes();
 
-      this.$('.chart').highcharts({
+      var options = {
         chart: {
+          renderTo: 'chart',
           type: 'column',
           borderRadius: 0,
           style: {
@@ -125,7 +132,17 @@ function( _,
             name: 'Klubkassens bidrag',
             data: clubMoney
           }]
-        });
+        };
+
+        this.chart = new Highcharts.Chart(options);
+    },
+
+    teardown: function(){
+      this.chart.destroy();
+
+      console.log('also destroying chart!');
+      
+      Backbone.View.prototype.teardown.apply(this, arguments);
     }
 
   }

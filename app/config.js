@@ -14,6 +14,14 @@ define(function(){
 
     // add site specific pages
     PageCollection.add([
+			{   route	  		:	'/',
+                templatePath 	: 	'pages/leaderboard.html',
+                isDefaultPage  	: 	true
+            }
+    ]);
+
+    // add site specific pages
+    PageCollection.add([
 			{   route	  		:	'leaderboard',
                 templatePath 	: 	'pages/leaderboard.html',
                 isDefaultPage  	: 	true

@@ -10,6 +10,10 @@ function( _,
     collection: new Collection(),
 
     initialize: function() {     
+      _.bindAll(this, 'emitChanges');
+      
+      this.prepareToDie();
+
       this.sandbox.on('route.leaderboard.**', this.updateBoard, this);
 
       // listen for changes in season and round widgets
@@ -86,9 +90,9 @@ function( _,
     },
 
     attachCollectionListeners: function() {
-      this.collection.on('reset',   this.emitChanges, this);
-      this.collection.on('add',     this.emitChanges, this);
-      this.collection.on('remove',  this.emitChanges, this);
+      this.collection.on('reset',   this.emitChanges);
+      this.collection.on('add',     this.emitChanges);
+      this.collection.on('remove',  this.emitChanges);
     },
 
     emitChanges: function() {
