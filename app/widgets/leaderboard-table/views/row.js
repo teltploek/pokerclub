@@ -12,7 +12,7 @@ function(_, rowTmpl) {
         initialize: function() {
             _.bindAll(this, 'render');
 
-            this.model.on('change', this.render);
+            // this.model.on('change', this.render);
 
             this.render();
         },

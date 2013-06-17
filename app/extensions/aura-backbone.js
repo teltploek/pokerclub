@@ -14,8 +14,6 @@ define(function() {
       },
       initialize: function(app) {
         Backbone = require('backbone');
-        app.core.mvc    = Backbone;
-        app.sandbox.mvc = Backbone;
         app.sandbox.widgets = app.core.Widgets;
 
         Backbone.View.prototype.prepareToDie = function(){
@@ -33,6 +31,8 @@ define(function() {
           this.sandbox.off();
           this.collection.off();
 
+          if (this.model) this.model.off();
+
           delete this.el;
 
           this.$el.empty();
@@ -42,6 +42,9 @@ define(function() {
 
           this.close();         
         };
+
+        app.core.mvc    = Backbone;
+        app.sandbox.mvc = Backbone;
 
         app.core.registerWidgetType('Backbone', Backbone.View.prototype);        
       }
