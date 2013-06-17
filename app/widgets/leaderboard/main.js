@@ -94,8 +94,6 @@ function( _,
     },
 
     emitChanges: function() {
-      console.log('emit changes');
-
       this.sandbox.emit('leaderboard-data.change', _.clone(this.collection));
     }
   }

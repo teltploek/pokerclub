@@ -139,8 +139,6 @@ function( _,
 
     teardown: function(){
       this.chart.destroy();
-
-      console.log('also destroying chart!');
       
       Backbone.View.prototype.teardown.apply(this, arguments);
     }

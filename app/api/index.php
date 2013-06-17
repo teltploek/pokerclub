@@ -143,6 +143,7 @@ $app->get('/leaderboard/{sortEntity}/{sortOrder}/{season}/{round}', function ($s
                                     SELECT COUNT(FK_members_ID) 
                                     FROM pk_members_tournaments AS mtsubsub 
                                     WHERE mtsubsub.FK_tournaments_ID = mtsub.FK_tournaments_ID 
+                                    AND mtsubsub.FK_membersTournamentsStatus_ID = 1
                                 ) 
                             )
                             /

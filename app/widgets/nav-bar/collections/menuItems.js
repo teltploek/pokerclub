@@ -10,20 +10,12 @@ define(['underscore', 'handlebars', 'config', '../models/item']
 
 	collection.add([
 		{
-			route 	: 'foo',
-			caption : 'Foo'
-		},
-		{
-			route 	: 'bar',
-			caption : 'Bar'
-		},
-		{
-			route 	: 'baz',
-			caption : 'Baz'
-		},
-		{
 			route 	: 'leaderboard',
-			caption : 'leaderboard'
+			caption : 'Leaderboard'
+		},
+		{
+			route 	: 'documentation',
+			caption : 'Dokumentation'
 		}
 	]);
 
