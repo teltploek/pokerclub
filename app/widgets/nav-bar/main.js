@@ -66,7 +66,6 @@ function( _,
       var $menuItemBody = this.$('ul.nav'),
           menuItems = [];
       
-      // FIXME: find out why we have an empty model on index 0
       this.collection.each(function(model) {
         var ItemView = this._getItemView(model);
 

@@ -2,14 +2,13 @@ define(['underscore', 'handlebars', 'config', '../models/item']
 , function(_, Handlebars, Configuration, ItemModel)
 {
 	// var urlTpl = Handlebars.compile( Configuration.serviceTemplates.navbarMenuItems );
-
-	var Collection = new Backbone.Collection({
-		model 	: ItemModel
-
-		// url	: Configuration.baseApiUrl + urlTpl()
+	var MenuItemsCollection = Backbone.Collection.extend({
+		model: ItemModel
 	});
 
-	Collection.add([
+	var collection = new MenuItemsCollection();
+
+	collection.add([
 		{
 			route 	: 'foo',
 			caption : 'Foo'
@@ -28,5 +27,5 @@ define(['underscore', 'handlebars', 'config', '../models/item']
 		}
 	]);
 
-	return Collection;
+	return collection;
 });
